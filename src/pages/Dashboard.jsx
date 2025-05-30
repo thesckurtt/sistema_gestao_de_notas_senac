@@ -14,7 +14,7 @@ const Dashboard = () => {
         </div>
       </nav>
       <div className="d-flex flex-row w-100 h-100 flex-grow-1">
-        <aside className="bg-dark py-4" style={{ overflowY: "scroll", maxHeight: "calc(100vh - 50px)", width: "350px" }}>
+        <aside className="bg-dark py-4" style={{ overflowY: "scroll", maxHeight: "calc(100vh - 50px)", width: "330px" }}>
           <div className="card d-flex justify-content-center card-body aside-card mb-2">
             <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
             <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>

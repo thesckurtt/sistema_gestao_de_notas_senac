@@ -32,6 +32,9 @@ aside {
   border-right: 1px solid #dee2e6;
 }
 
+.c-pointer{
+  cursor: pointer;
+}
 /* main {
   flex: 1;
   display: flex;

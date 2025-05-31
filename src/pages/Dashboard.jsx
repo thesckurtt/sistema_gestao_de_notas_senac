@@ -3,6 +3,13 @@ import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const [note, setNote] = useState({
+    title: "",
+    content: "",
+    user_id: user.id,
+    id: null,
+  });
+  const [isNewNote, setIsNewNote] = useState(true);
   const [notes, setNotes] = useState(() => {
     window.electronNotesAPI
       .getAllNotes({ user_id: user.id })
@@ -62,7 +69,19 @@ const Dashboard = () => {
           {notes ? (
             notes.map((note) => {
               return (
-                <div key={note.id} className="card d-flex justify-content-center card-body aside-card mb-2">
+                <div
+                  onClick={() => {
+                    setIsNewNote(false);
+                    setNote({
+                      title: note.title,
+                      content: note.content,
+                      user_id: user.id,
+                      id: note.id,
+                    });
+                  }}
+                  key={note.id}
+                  className="card c-pointer d-flex justify-content-center card-body aside-card mb-2"
+                >
                   <h5 className="card-title">
                     Nota: <span className="fw-light">{note.title}</span>
                   </h5>
@@ -84,7 +103,9 @@ const Dashboard = () => {
             className="card p-4 shadow"
             style={{ width: "100%", maxWidth: "500px" }}
           >
-            <h5 className="card-title">Título do Card</h5>
+            <h5 className="card-title">
+              {isNewNote ? "Nova Nota" : `Nota: ${note.title}`}
+            </h5>
             <hr />
             <div className="mb-3">
               <label htmlFor="nomeCard" className="form-label">
@@ -94,6 +115,10 @@ const Dashboard = () => {
                 type="text"
                 className="form-control"
                 id="nomeCard"
+                value={note.title}
+                onChange={(e) => {
+                  setNote({ ...note, title: e.target.value });
+                }}
                 placeholder="Digite o nome"
               />
             </div>
@@ -107,6 +132,10 @@ const Dashboard = () => {
                 rows="6"
                 style={{ resize: "none" }}
                 placeholder="Digite o conteúdo"
+                value={note.content}
+                onChange={(e) => {
+                  setNote({ ...note, content: e.target.value });
+                }}
               ></textarea>
             </div>
             <hr />

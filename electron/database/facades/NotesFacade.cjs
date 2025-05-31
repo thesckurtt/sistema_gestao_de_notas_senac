@@ -53,7 +53,6 @@ class NotesFacade {
       return this.errorHandler(error)
     }
   }
-
 }
 
 module.exports = NotesFacade

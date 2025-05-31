@@ -8,7 +8,13 @@ class NotesFacade {
   static async getAllNotes({ user_id }) {
     try {
       const notes = await db('notes').where('user_id', user_id).orderBy('created_at', 'desc')
-      return notes || []
+      if (notes.length > 0) {
+        return { error: false, notes }
+      }
+      else if (notes.length === 0) {
+        return { error: false, message: 'No notes found for this user' }
+      }
+      return { error: true, message: 'Error fetching notes' }
     } catch (error) {
       return this.errorHandler(error)
     }
@@ -54,6 +60,6 @@ class NotesFacade {
     }
   }
 }
-
+// NotesFacade.getAllNotes({ user_id: 53 }).then((result) => console.log(result))
 module.exports = NotesFacade
 

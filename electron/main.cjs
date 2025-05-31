@@ -40,12 +40,18 @@ function createMainWindow() {
   mainWindow.loadURL('http://localhost:5173')
 }
 
+// Auth IPC Handlers
 ipcMain.handle('auth:login', async (_,user) => {
   return await AuthFacade.login(user)
 })
 
 ipcMain.handle('auth:register', async (_,user) => {
   return await AuthFacade.register(user)
+})
+
+// Notes IPC Handlers
+ipcMain.handle('notes:getAll', async (_, {user_id}) => {
+  return await AuthFacade.getAllNotes({ user_id })
 })
 
 app.whenReady().then(createMainWindow)

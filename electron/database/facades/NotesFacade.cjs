@@ -39,10 +39,22 @@ class NotesFacade {
     }
   }
 
+  static async updateNote({ note_id, user_id, title, content }) {
+    try {
+      const result = await db('notes')
+        .where({ id: note_id, user_id })
+        .update({ title, content })
+
+      if (result === 1) {
+        return { error: false, message: 'Note updated successfully' }
+      }
+      return { error: true, message: 'Note not found or not updated' }
+    } catch (error) {
+      return this.errorHandler(error)
+    }
+  }
+
 }
 
-// NotesFacade.getAllNotes({ user_id: 53 }).then((notes) => console.log(notes[0].title))
-// NotesFacade.deleteNote({ note_id: 12, user_id: 53 }).then((result) => console.log(result))
-// (db('notes').insert({ user_id: 53, title: "teste", content: "Lorem ipsum dolor it" }).returning('*')).then((result) => console.log(result))
 module.exports = NotesFacade
 

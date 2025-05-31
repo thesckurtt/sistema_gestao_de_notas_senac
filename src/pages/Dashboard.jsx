@@ -1,8 +1,45 @@
-import React from "react";
+import React, { use, useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const [notes, setNotes] = useState(() => {
+    window.electronNotesAPI
+      .getAllNotes({ user_id: user.id })
+      .then((response) => {
+        if (!response.error && response.notes.length > 0) {
+          setNotes(response.notes);
+        } else {
+          setNotes([]);
+        }
+      });
+  });
+
+  useEffect(() => {
+    console.log("notasss: ", notes);
+  }, [notes]);
+
+  // useEffect(() => {
+  //   async function fetchNotes() {
+  //     if(!user?.id){
+  //       console.error("User is not available");
+  //       return;
+  //     }
+
+  //     try {
+  //       const response  = await window.electronNotesAPI.getAllNotes({ user_id: user.id });
+  //       if (!response.error) {
+  //         setNotes(response.notes);
+  //         console.log(notes)
+  //       }
+  //     } catch (error) {
+  //       console.log("Error fetching notes:", error.message);
+  //     }
+  //   }
+
+  //   fetchNotes();
+  // }, [user]);
+
   return (
     <>
       <nav className="navbar navbar-dark bg-dark w-100">
@@ -14,39 +51,32 @@ const Dashboard = () => {
         </div>
       </nav>
       <div className="d-flex flex-row w-100 h-100 flex-grow-1">
-        <aside className="bg-dark py-4" style={{ overflowY: "scroll", maxHeight: "calc(100vh - 50px)", width: "330px" }}>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
-          <div className="card d-flex justify-content-center card-body aside-card mb-2">
-            <h5 className="card-title">Nota: <span className="fw-light">Lorem</span></h5>
-            <p style={{fontSize: '0.8em', margin: '0'}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-          </div>
+        <aside
+          className="bg-dark py-4"
+          style={{
+            overflowY: "scroll",
+            maxHeight: "calc(100vh - 50px)",
+            width: "330px",
+          }}
+        >
+          {notes ? (
+            notes.map((note) => {
+              return (
+                <div key={note.id} className="card d-flex justify-content-center card-body aside-card mb-2">
+                  <h5 className="card-title">
+                    Nota: <span className="fw-light">{note.title}</span>
+                  </h5>
+                  <p style={{ fontSize: "0.8em", margin: "0" }}>
+                    {note.content.length > 60
+                      ? note.content.substring(0, 60) + "..."
+                      : note.content}
+                  </p>
+                </div>
+              );
+            })
+          ) : (
+            <p>nenhuma nota</p>
+          )}
         </aside>
 
         <main className="main-dashboard">

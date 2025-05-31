@@ -27,6 +27,16 @@ const Dashboard = () => {
       });
   });
 
+  const handleNewNote = () => {
+    setIsNewNote(true);
+    setNote({
+      title: "",
+      content: "",
+      user_id: user.id,
+      id: null,
+    });
+  }
+
   useEffect(() => {
     console.log("notasss: ", notes);
   }, [notes]);
@@ -41,6 +51,12 @@ const Dashboard = () => {
           setNote={setNote}
         />
         <MainDashboard>
+          <div className="p-3 d-flex w-100 justify-content-start align-items-start">
+            <nav className="w-100">
+              <button className="btn btn-dark" onClick={handleNewNote}>Nova Nota <i class="fa-solid fa-circle-plus"></i></button>
+            <hr />
+            </nav>
+          </div>
           <MainCardDashboard
             note={note}
             setNote={setNote}

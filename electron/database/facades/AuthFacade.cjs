@@ -16,7 +16,7 @@ class AuthFacade {
 
       if (isValidPassword && user) {
         const token = JWT.sign({ user_id: 1, name: user.name }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
-        return { error: false, user: {name: user.name, email: user.email}, token: token }
+        return { error: false, user: {name: user.name, email: user.email, id: user.id}, token: token }
       }
 
       return { error: true, message: "Invalid credentials" }

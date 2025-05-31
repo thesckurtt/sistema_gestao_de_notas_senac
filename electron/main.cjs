@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron')
 const path = require('node:path')
 let mainWindow = null
 const AuthFacade = require('./database/facades/AuthFacade.cjs')
+const NotesFacade = require('./database/facades/NotesFacade.cjs')
 const dotenv = require('dotenv')
 dotenv.config({ path: path.join(__dirname, '../.env') })
 
@@ -51,7 +52,7 @@ ipcMain.handle('auth:register', async (_,user) => {
 
 // Notes IPC Handlers
 ipcMain.handle('notes:getAll', async (_, {user_id}) => {
-  return await AuthFacade.getAllNotes({ user_id })
+  return await NotesFacade.getAllNotes({ user_id })
 })
 
 app.whenReady().then(createMainWindow)

@@ -6,9 +6,9 @@ contextBridge.exposeInMainWorld('electronAuth', {
 })
 
 contextBridge.exposeInMainWorld('electronNotesAPI', {
-  getAllNotes: ({ user_id }) => ipcRenderer.invoke('notes:getAll', {  user_id }),
+  getAllNotes: ({ user_id }) => ipcRenderer.invoke('notes:getAll', { user_id }),
   getNoteById: ({ user_id, note_id }) => ipcRenderer.invoke('notes:getById', { data: { user_id, note_id } }),
-  createNote: ({ user_id, data }) => ipcRenderer.invoke('notes:create', { data: { user_id, ...data } }),
+  createNote: ({ user_id, title, content }) => ipcRenderer.invoke('notes:create', { user_id, title, content }),
   updateNote: ({ user_id, note_id, data }) => ipcRenderer.invoke('notes:update', { data: { user_id, note_id, ...data } }),
   deleteNote: ({ user_id, note_id }) => ipcRenderer.invoke('notes:delete', { data: { user_id, note_id } }),
 })

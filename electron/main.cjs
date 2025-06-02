@@ -31,7 +31,7 @@ function createMainWindow() {
           { type: 'separator' },
           { role: 'quit', label: 'Sair' },
           { type: 'separator' },
-          {role: 'toggledevtools', label: 'Ferramentas de Desenvolvedor'}
+          { role: 'toggledevtools', label: 'Ferramentas de Desenvolvedor' }
         ]
       }
     ];
@@ -42,17 +42,20 @@ function createMainWindow() {
 }
 
 // Auth IPC Handlers
-ipcMain.handle('auth:login', async (_,user) => {
+ipcMain.handle('auth:login', async (_, user) => {
   return await AuthFacade.login(user)
 })
 
-ipcMain.handle('auth:register', async (_,user) => {
+ipcMain.handle('auth:register', async (_, user) => {
   return await AuthFacade.register(user)
 })
 
 // Notes IPC Handlers
-ipcMain.handle('notes:getAll', async (_, {user_id}) => {
+ipcMain.handle('notes:getAll', async (_, { user_id }) => {
   return await NotesFacade.getAllNotes({ user_id })
+})
+ipcMain.handle('notes:create', async (_, { user_id, title, content }) => {
+  return await NotesFacade.createNote({ user_id, title, content })
 })
 
 app.whenReady().then(createMainWindow)

@@ -1,7 +1,45 @@
 import React from "react";
 import { BTNDashboard } from "./BTNDashboard";
 
-export const MainCardDashboard = ({ isNewNote, note, setNote }) => {
+export const MainCardDashboard = ({
+  isNewNote,
+  note,
+  setNote,
+  setNotes,
+  handleNewNote,
+  user,
+}) => {
+  const createNote = () => {
+    if (isNewNote) {
+      window.electronNotesAPI
+        .createNote({ user_id: user.id, data: note })
+        .then((response) => {
+          if (!response.error) {
+            setNotes((prevNotes) => [...prevNotes, response.note]);
+            handleNewNote();
+          } else {
+            console.error("Error creating note:", response.error);
+          }
+        });
+    }
+    // alert("Função de criação de nota ainda não implementada.");
+  };
+  const updateNote = () => {
+    if (!isNewNote && note.id) {
+      window.electronNotesAPI
+        .updateNote({ user_id: user.id, data: note })
+        .then((response) => {
+          if (!response.error) {
+            setNotes((prevNotes) =>
+              prevNotes.map((n) => (n.id === note.id ? response.note : n))
+            );
+          } else {
+            console.error("Error updating note:", response.error);
+          }
+        });
+    }
+    // alert("Função de atualização de nota ainda não implementada.");
+  };
   return (
     <div className="w-100 flex-grow-1 v-100 d-flex justify-content-center align-items-center">
       <div
@@ -51,7 +89,11 @@ export const MainCardDashboard = ({ isNewNote, note, setNote }) => {
         </div>
         <hr />
         <div className="d-flex justify-content-between">
-          <BTNDashboard customClass={"btn-success"} label={"Salvar"} />
+          <BTNDashboard
+            customClass={"btn-success"}
+            label={"Salvar"}
+            onClick={isNewNote ? createNote : updateNote}
+          />
           <BTNDashboard customClass={"btn-danger"} label={"Excluir Nota"} />
         </div>
       </div>

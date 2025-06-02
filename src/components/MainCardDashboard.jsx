@@ -31,6 +31,28 @@ export const MainCardDashboard = ({
     }
   };
 
+  const deleteNote = () => {
+    if (!isNewNote && note.id) {
+      window.electronNotesAPI
+        .deleteNote({ user_id: user.id, note_id: note.id })
+        .then((response) => {
+          if (!response.error) {
+            setNotes((prevNotes) =>
+              prevNotes.filter((n) => n.id !== note.id)
+            );
+            handleNewNote();
+            console.log("Nota excluída com sucesso:", response);
+          } else {
+            console.error(
+              "Error deleting note:",
+              response.error,
+              response.message
+            );
+          }
+        });
+    }
+  }
+
   const updateNote = () => {
     if (!isNewNote && note.id) {
       window.electronNotesAPI
@@ -105,7 +127,7 @@ export const MainCardDashboard = ({
             label={"Salvar"}
             onClick={isNewNote ? createNote : updateNote}
           />
-          {!isNewNote ? <BTNDashboard customClass={"btn-danger"} label={"Excluir Nota"} /> : null}
+          {!isNewNote ? <BTNDashboard customClass={"btn-danger"} label={"Excluir Nota"} onClick={deleteNote} /> : null}
           
         </div>
       </div>

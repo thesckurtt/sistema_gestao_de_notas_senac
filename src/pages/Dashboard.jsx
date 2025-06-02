@@ -64,7 +64,6 @@ const Dashboard = () => {
             setNote={setNote}
             isNewNote={isNewNote}
             user={user}
-            notes={notes}
           />
         </MainDashboard>
       </ContainerFlexDashboard>

@@ -1,3 +1,4 @@
+const { da } = require('@faker-js/faker')
 const db = require('../knex.cjs')
 
 class NotesFacade {
@@ -45,14 +46,13 @@ class NotesFacade {
     }
   }
 
-  static async updateNote({ note_id, user_id, title, content }) {
+  static async updateNote({ note_id, user_id, data }) {
     try {
       const result = await db('notes')
         .where({ id: note_id, user_id })
-        .update({ title, content })
-
+        .update({ ...data })
       if (result === 1) {
-        return { error: false, message: 'Note updated successfully' }
+        return { error: false, message: 'Note updated successfully', note: await db('notes').where({ id: note_id }).first() }
       }
       return { error: true, message: 'Note not found or not updated' }
     } catch (error) {

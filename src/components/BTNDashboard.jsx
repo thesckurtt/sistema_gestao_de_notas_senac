@@ -1,7 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export const BTNDashboard = ({customClass, label, action}) => {
+export const BTNDashboard = ({ customClass, label, ...attrs }) => {
   return (
-    <button className={`btn ${customClass}`} onClick={action}>{label}</button>
-  )
-}
+    <button className={`btn ${customClass}`} {...attrs}>
+      {label}
+    </button>
+  );
+};

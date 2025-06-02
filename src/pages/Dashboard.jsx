@@ -39,6 +39,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     console.log("notasss: ", notes);
+    
   }, [notes]);
 
   return (

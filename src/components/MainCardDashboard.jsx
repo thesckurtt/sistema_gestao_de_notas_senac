@@ -11,16 +11,24 @@ export const MainCardDashboard = ({
 }) => {
   const createNote = () => {
     if (isNewNote) {
+      // const data = {
+      //   user_id: user.id,
+      //   title: note.title,
+      //   content: note.content,
+      // };
+      // console.log({ user_id: user.id, title: note.title, content: note.content })
       window.electronNotesAPI
-        .createNote({ user_id: user.id, data: note })
+        .createNote({ user_id: user.id, title: note.title, content: note.content })
         .then((response) => {
           if (!response.error) {
+            console.log(response)
             setNotes((prevNotes) => [...prevNotes, response.note]);
             handleNewNote();
           } else {
             console.error("Error creating note:", response.error);
           }
         });
+
     }
     // alert("Função de criação de nota ainda não implementada.");
   };

@@ -20,7 +20,7 @@ exports.seed = async function (knex) {
 
   const notes = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1; i++) {
     notes.push({
       title: faker.lorem.words(3),
       content: faker.lorem.words(30),

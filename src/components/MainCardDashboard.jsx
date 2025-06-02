@@ -8,6 +8,7 @@ export const MainCardDashboard = ({
   setNotes,
   handleNewNote,
   user,
+  notes,
 }) => {
   const createNote = () => {
     if (isNewNote) {
@@ -19,8 +20,7 @@ export const MainCardDashboard = ({
         })
         .then((response) => {
           if (!response.error) {
-            console.log(response);
-            setNotes((prevNotes) => [...prevNotes, response.note]);
+            setNotes((prev) => [response.note, ...prev]);
             handleNewNote();
           } else {
             console.error("Error creating note:", response.error);

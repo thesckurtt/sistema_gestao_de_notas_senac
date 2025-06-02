@@ -8,10 +8,9 @@ export const MainCardDashboard = ({
   setNotes,
   handleNewNote,
   user,
-  notes,
 }) => {
   const createNote = () => {
-    if (isNewNote) {
+    if (isNewNote && note.title && note.content) {
       window.electronNotesAPI
         .createNote({
           user_id: user.id,
@@ -26,6 +25,9 @@ export const MainCardDashboard = ({
             console.error("Error creating note:", response.error);
           }
         });
+    }
+    if (!note.title || !note.content) {
+      alert("Por favor, preencha o título e o conteúdo da nota.");
     }
   };
   const updateNote = () => {

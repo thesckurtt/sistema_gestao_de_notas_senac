@@ -10,5 +10,5 @@ contextBridge.exposeInMainWorld('electronNotesAPI', {
   getNoteById: ({ user_id, note_id }) => ipcRenderer.invoke('notes:getById', { data: { user_id, note_id } }),
   createNote: ({ user_id, title, content }) => ipcRenderer.invoke('notes:create', { user_id, title, content }),
   updateNote: ({ user_id, note_id, data }) => ipcRenderer.invoke('notes:update', {user_id, note_id, data }),
-  deleteNote: ({ user_id, note_id }) => ipcRenderer.invoke('notes:delete', { data: { user_id, note_id } }),
+  deleteNote: ({ user_id, note_id }) => ipcRenderer.invoke('notes:delete', { user_id, note_id }),
 })

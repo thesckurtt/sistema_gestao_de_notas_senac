@@ -57,5 +57,8 @@ ipcMain.handle('notes:getAll', async (_, { user_id }) => {
 ipcMain.handle('notes:create', async (_, { user_id, title, content }) => {
   return await NotesFacade.createNote({ user_id, title, content })
 })
+ipcMain.handle('notes:update', async (_, { user_id, note_id, data }) => {
+  return await NotesFacade.updateNote({ user_id, note_id, data })
+})
 
 app.whenReady().then(createMainWindow)

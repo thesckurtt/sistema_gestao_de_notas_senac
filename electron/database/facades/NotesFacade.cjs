@@ -37,7 +37,7 @@ class NotesFacade {
     try {
       const [newNote] = await db('notes').insert({ user_id, title, content })
       if (newNote) {
-        return { error: false, message: 'Note created successfully', note_id: newNote }
+        return { error: false, message: 'Note created successfully', note_id: newNote, note: await db('notes').where({ id: newNote }).first() }
       }
       return { error: true, message: 'Note not created' }
     } catch (error) {

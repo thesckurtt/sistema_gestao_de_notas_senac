@@ -30,21 +30,26 @@ export const MainCardDashboard = ({
       alert("Por favor, preencha o título e o conteúdo da nota.");
     }
   };
+
   const updateNote = () => {
     if (!isNewNote && note.id) {
       window.electronNotesAPI
-        .updateNote({ user_id: user.id, data: note })
+        .updateNote({ user_id: user.id, note_id: note.id, data: note })
         .then((response) => {
           if (!response.error) {
             setNotes((prevNotes) =>
               prevNotes.map((n) => (n.id === note.id ? response.note : n))
             );
+            console.log("Nota atualizada com sucesso:", response);
           } else {
-            console.error("Error updating note:", response.error);
+            console.error(
+              "Error updating note:",
+              response.error,
+              response.message
+            );
           }
         });
     }
-    // alert("Função de atualização de nota ainda não implementada.");
   };
   return (
     <div className="w-100 flex-grow-1 v-100 d-flex justify-content-center align-items-center">
@@ -100,7 +105,8 @@ export const MainCardDashboard = ({
             label={"Salvar"}
             onClick={isNewNote ? createNote : updateNote}
           />
-          <BTNDashboard customClass={"btn-danger"} label={"Excluir Nota"} />
+          {!isNewNote ? <BTNDashboard customClass={"btn-danger"} label={"Excluir Nota"} /> : null}
+          
         </div>
       </div>
     </div>

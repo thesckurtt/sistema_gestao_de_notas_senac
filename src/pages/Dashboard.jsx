@@ -15,17 +15,7 @@ const Dashboard = () => {
     id: null,
   });
   const [isNewNote, setIsNewNote] = useState(true);
-  const [notes, setNotes] = useState(() => {
-    window.electronNotesAPI
-      .getAllNotes({ user_id: user.id })
-      .then((response) => {
-        if (!response.error && response.notes.length > 0) {
-          setNotes(response.notes);
-        } else {
-          setNotes([]);
-        }
-      });
-  });
+  const [notes, setNotes] = useState([]);
 
   const handleNewNote = () => {
     setIsNewNote(true);
@@ -38,9 +28,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log("notasss: ", notes);
-    
-  }, [notes]);
+    window.electronNotesAPI
+      .getAllNotes({ user_id: user.id })
+      .then((response) => {
+        if (!response.error && response.notes.length > 0) {
+          setNotes(response.notes);
+        } else {
+          setNotes([]);
+        }
+      });
+  }, [user.id]);
 
   return (
     <>

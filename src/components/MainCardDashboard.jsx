@@ -1,4 +1,5 @@
 import React from "react";
+import { BTNDashboard } from "./BTNDashboard";
 
 export const MainCardDashboard = ({ isNewNote, note, setNote }) => {
   return (
@@ -8,7 +9,13 @@ export const MainCardDashboard = ({ isNewNote, note, setNote }) => {
         style={{ width: "100%", maxWidth: "500px" }}
       >
         <h5 className="card-title">
-          {isNewNote ? "Nova Nota" : <>Nota: <span className="fw-light">{note.title}</span></>}
+          {isNewNote ? (
+            "Nova Nota"
+          ) : (
+            <>
+              Nota: <span className="fw-light">{note.title}</span>
+            </>
+          )}
         </h5>
         <hr />
         <div className="mb-3">
@@ -44,8 +51,8 @@ export const MainCardDashboard = ({ isNewNote, note, setNote }) => {
         </div>
         <hr />
         <div className="d-flex justify-content-between">
-          <button className="btn btn-success">Salvar</button>
-          <button className="btn btn-danger">Excluir Nota</button>
+          <BTNDashboard customClass={"btn-success"} label={"Salvar"} />
+          <BTNDashboard customClass={"btn-danger"} label={"Excluir Nota"} />
         </div>
       </div>
     </div>

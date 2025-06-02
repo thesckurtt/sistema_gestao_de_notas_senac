@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { AsideNotesDashboard } from "../components/AsideNotesDashboard";
 import { MainCardDashboard } from "../components/MainCardDashboard";

@@ -12,7 +12,7 @@ export const AsideNotesDashboard = ({ notes, setIsNewNote, setNote }) => {
         width: "330px",
       }}
     >
-      {notes ? (
+      {notes && (
         notes.map((note) => {
           return (
             <div
@@ -39,8 +39,11 @@ export const AsideNotesDashboard = ({ notes, setIsNewNote, setNote }) => {
             </div>
           );
         })
-      ) : (
-        <p>nenhuma nota</p>
+      )}
+      {notes.length === 0 && (
+        <div className="text-center text-white font-style-italic">
+          <span>Você não pussuí notas</span>
+        </div>
       )}
     </aside>
   );

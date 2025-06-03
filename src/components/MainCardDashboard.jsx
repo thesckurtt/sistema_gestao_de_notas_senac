@@ -32,7 +32,7 @@ export const MainCardDashboard = ({
   };
 
   const deleteNote = () => {
-    if (!isNewNote && note.id) {
+    if (!isNewNote && note.id && window.confirm("Você tem certeza que deseja excluir esta nota?")) {
       window.electronNotesAPI
         .deleteNote({ user_id: user.id, note_id: note.id })
         .then((response) => {
@@ -54,7 +54,7 @@ export const MainCardDashboard = ({
   }
 
   const updateNote = () => {
-    if (!isNewNote && note.id) {
+    if (!isNewNote && note.id && note.title && note.content) {
       window.electronNotesAPI
         .updateNote({ user_id: user.id, note_id: note.id, data: note })
         .then((response) => {
